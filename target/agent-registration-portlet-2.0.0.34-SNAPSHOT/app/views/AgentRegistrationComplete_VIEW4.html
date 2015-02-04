@@ -1,0 +1,50 @@
+
+
+<section ng-app="endRegistrationProcess">
+
+    <header>
+        <div class="content-header">
+            <div class="register-icon"></div>
+            <div class="content-title">
+                <h2>Create a new <strong>get me there</strong> agent</h2>
+                <p>Agent successfully created</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-container" ng-controller="EndRegistrationProcess-ctrl">
+
+        <form method="post" action="#">
+
+            <div class="row-fluid page-message">
+                <div class="span8">
+                    <p class="message-heading">You have successfully created this agent!</p>
+                </div>
+                <!-- close span8 -->
+
+            </div>
+            <!-- close row-fluid -->
+
+            <div class="next-step-cancel">
+                <!-- <h:commandLink action="endRegistrationProcess" styleClass="btn">
+                    <span class="pull-left">OK</span>
+                    <i class="step-btn-icon"></i>
+                </h:commandLink> -->
+
+                <button class="btn" ng-click="confirmAgentRegistration();">
+                    <span class="pull-left">OK</span>
+                    <i class="step-btn-icon"></i>
+                </button>
+
+
+
+            </div>
+            <!-- close next-step-cancel -->
+
+        </form>
+
+    </div>
+    <!-- content-container -->
+</section>
+
+
