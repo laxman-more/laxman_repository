@@ -3,7 +3,7 @@
 angular.module('agentRegistrationPortletApp')
     .factory('webServiceDal', ['$http', '$httpBackend', '$q', 'config', 'sessionTokenService',
         function ($http, $httpBackend, $q, config, sessionTokenService) {
-
+ /*
             //TODO: ADD COMMON DATA USED IN EVERY SERVICE CALL
             var commonRequestData = {
                 userContext: 'Customer'
@@ -131,6 +131,7 @@ angular.module('agentRegistrationPortletApp')
                     return $http.post(endpoint, requestObject).then(onSuccess, onError);
                 }
             };
+            */
         }]);
 
 //////////////////

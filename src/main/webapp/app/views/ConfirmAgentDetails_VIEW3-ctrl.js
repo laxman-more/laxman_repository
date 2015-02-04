@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('agentRegistrationPortletApp').controller('ConfirmAgentDetails_VIEW3-ctrl',
-    ['$scope', '$location', '$routeParams', 'sessionService', 'validationProvider', 'webServiceDal', 'portletUtils',
-        function ($scope, $location, $routeParams, sessionService, validationProvider, webServiceDal, portletUtils) {
+    ['$scope', '$location', '$routeParams', 'sessionService', 'validationProvider', 'webServiceDal',
+        function ($scope, $location, $routeParams, sessionService, validationProvider, webServiceDal) {
             $scope.sessionData = sessionService;
             $scope.validationData = validationProvider;
 

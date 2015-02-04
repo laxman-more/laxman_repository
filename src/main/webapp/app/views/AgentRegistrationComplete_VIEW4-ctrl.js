@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('agentRegistrationPortletApp').controller('AgentRegistrationComplete_VIEW4-ctrl',
-    ['$scope', '$location', '$routeParams', 'sessionService', 'validationProvider', 'webServiceDal', 'portletUtils',
-        function ($scope, $location, $routeParams, sessionService, validationProvider, webServiceDal, portletUtils) {
+    ['$scope', '$location', '$routeParams', 'sessionService', 'validationProvider', 'webServiceDal',
+        function ($scope, $location, $routeParams, sessionService, validationProvider, webServiceDal) {
             $scope.confirmAgentRegistration = function() {
                 var onSuccess = function (response) {
                     alert("Success");

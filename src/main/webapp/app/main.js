@@ -7,10 +7,7 @@
  *
  * Main module of the application.
  */
-// CHECKING FOR MISSING
-var themePortletUtils = themePortletUtils || alert('Critical Error: "themePortletUtils" object is missing in liferay theme.');
-var liferayPortletPath = liferayPortletPath || alert('Critical Error: "liferayPortletPath" variable is missing in liferay view.');
-var liferayUserContext = liferayUserContext || alert('Critical Error: "liferayUserContext" variable is missing in liferay view.');
+//var liferayUserContext = liferayUserContext || alert('Critical Error: "liferayUserContext" variable is missing in liferay view.');
 
 var app = angular.module('agentRegistrationPortletApp',
     ['ngRoute']);
@@ -18,27 +15,27 @@ var app = angular.module('agentRegistrationPortletApp',
 app
     .constant('config', {
         debug: false,
-        useMocks: true,
+        useMocks: checkMock,
         viewsDir: '/views/',
         modalsDir: '/modals/',
         portletPath: liferayPortletPath,
         applicationServiceAddress: appAddr,
-       // userContext: themePortletUtils.getUserContext(liferayUserContext),
+        // userContext: themePortletUtils.getUserContext(liferayUserContext),
         endpointDict: {
-			//TODO: modify service names as per your requirement
+            //TODO: modify service names as per your requirement
             doFinaliseCheckout: this.applicationServiceAddress + '/BasketApplicationService/doFinaliseCheckout',
             getBasketItems: this.applicationServiceAddress + '/BasketApplicationService/listBasketItems'
         }
     })
-    .value('portletUtils', themePortletUtils)
+   // .value('portletUtils', themePortletUtils)
     .config(['$routeProvider', 'config', function ($routeProvider, config) {
         $routeProvider
             //TODO: CONFIGURE ROUTING FOR VIEWS
-			//TODO: Remove or add params as per requirement
-	        .when('/AdminDashboard_VIEW1', {
-	            templateUrl: config.portletPath + config.viewsDir + 'AdminDashboard_VIEW1.html',
-	            controller: 'AdminDashboard_VIEW1-ctrl'
-	        })
+            //TODO: Remove or add params as per requirement
+            .when('/AdminDashboard_VIEW1', {
+                templateUrl: config.portletPath + config.viewsDir + 'AdminDashboard_VIEW1.html',
+                controller: 'AdminDashboard_VIEW1-ctrl'
+            })
             .when('/EnterAgentDetails_VIEW2', {
                 templateUrl: config.portletPath + config.viewsDir + 'EnterAgentDetails_VIEW2.html',
                 controller: 'EnterAgentDetails_VIEW2-ctrl'
@@ -51,8 +48,8 @@ app
                 templateUrl: config.portletPath + config.viewsDir + 'AgentRegistrationComplete_VIEW4.html',
                 controller: 'AgentRegistrationComplete_VIEW4-ctrl'
             })
-           .otherwise({
-                redirectTo: '/AdminDashboard_VIEW1'
+            .otherwise({
+                redirectTo: '/EnterAgentDetails_VIEW2'
             });
     }])
     .factory('sessionTokenService', function () {

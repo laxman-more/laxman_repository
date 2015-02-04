@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('agentRegistrationPortletApp').controller('EnterAgentDetails_VIEW2-ctrl',
-    ['$scope', '$location', '$routeParams', 'sessionService', 'validationProvider', 'webServiceDal', 'portletUtils','$window',
-        function ($scope, $location, $routeParams, sessionService, validationProvider, webServiceDal, portletUtils, $window) {
+    ['$scope', '$location', '$routeParams', 'sessionService', 'validationProvider', 'webServiceDal', '$window',
+        function ($scope, $location, $routeParams, sessionService, validationProvider, webServiceDal, $window) {
             $scope.sessionData = sessionService;
             $scope.validationViewModel = validationProvider;
             $scope.globalError = null;
