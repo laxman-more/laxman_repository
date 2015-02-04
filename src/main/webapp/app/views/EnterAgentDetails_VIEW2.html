@@ -11,7 +11,7 @@
             </div>
         </header>
 
-        <form name="regForm" method="post" action="#" class="validate" novalidate>
+        <form name="regForm" method="post" action="#" class="validate" ng-submit="regForm.$valid && nextStep()" novalidate>
             <div class="content-container">
 
                 <div class="row-fluid">
@@ -25,15 +25,14 @@
                             <label for="tfgm-form-create-agent-forename" class="field-title">First name<span
                                     class="field-asterisk">*<span class="ir">Required</span></span></label>
                             <div class="controls">
-                                <input type="text" name="forename" styleClass="input-block-level"
+                                <input type="text" name="firstName" styleClass="input-block-level"
                                        id="tfgm-form-create-agent-forename" ng-maxlength="71"
-                                       required ng-model="sessionData.agentViewModel.firstName"
+                                       required ng-model="sessionData.agentViewModel.firstName"  ng-pattern="{{validationViewModel.firstName.pattern}}"
                                         >
                                 </input>
-                                <p ng-show="regForm.forename.$error.required && !regForm.forename.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-
-                                <!-- <h:message for="tfgm-form-create-agent-forename" class="field-error" /> -->
                             </div>
+                            <span class="field-error" ng-show="submitted && regForm.firstName.$error.required" style="">{{validationViewModel.firstName.requiredErrorMessage}}</span>
+                            <span class="field-error" ng-show="!regForm.firstName.$error.required && regForm.firstName.$invalid" style="">{{validationViewModel.firstName.patternErrorMessage}}</span>
                         </div>
 
                         <div class="control-group">
@@ -42,11 +41,11 @@
                             <div class="controls">
                                 <input type="text" name="lastName" styleClass="input-block-level"
                                        id="tfgm-form-create-agent-surname" ng-maxlength="71"
-                                       ng-model="sessionData.agentViewModel.lastName" required>
+                                       ng-model="sessionData.agentViewModel.lastName"  ng-pattern="{{validationViewModel.lastName.pattern}}" required>
                                 </input>
-                                <p ng-show="regForm.lastName.$error.required && !regForm.lastName.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <!--<h:message for="tfgm-form-create-agent-surname" class="field-error" />-->
                             </div>
+                            <span class="field-error" ng-show="submitted && regForm.lastName.$error.required" style="">{{validationViewModel.lastName.requiredErrorMessage}}</span>
+                            <span class="field-error" ng-show="!regForm.lastName.$error.required && regForm.lastName.$invalid" style="">{{validationViewModel.lastName.patternErrorMessage}}</span>
                         </div>
 
                         <!--	<div class="control-group">
@@ -84,15 +83,9 @@
                                         required>
                                     <option value="">Please select...</option>
                                 </select>
-                                <p ng-show="regForm.gender.$error.required && !regForm.gender.$pristine">This is a required field. Please enter a value and try again.</p>
-                                <!--<h:selectOneMenu name="tfgm-form-card-gender" id="tfgm-form-card-gender"
-                                                   value="#{agentViewModel.gender}" class="input-block-level val-required"
-                                                   required="true" requiredMessage="${msg.MSG0041}">
-                                <f:selectItem itemLabel="Please select..." itemValue="" />
-                                <f:selectItems value="#{agentViewModel.genders}" var="gender" itemLabel="#{gender.label}" itemValue="#{gender.value}"/>
-                            </h:selectOneMenu>-->
-                            </div>
 
+                            </div>
+                            <span class="field-error" ng-show="submitted && regForm.gender.$error.required" style="">{{validationViewModel.required.requiredErrorMessage}}</span>
                             <!--<h:message for="tfgm-form-card-gender" class="field-error"/>-->
                         </div>
 
@@ -105,10 +98,11 @@
                                        id="tfgm-form-create-agent-email" ng-maxlength="75"
                                        ng-model="sessionData.agentViewModel.email" required>
                                 </input>
-                                <p ng-show="regForm.email.$error.required && !regForm.email.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <p ng-show="regForm.email.$error.email && !regForm.email.$pristine" class="help-block">Email is not Valid</p>
+
                                 <!--<h:message for="tfgm-form-create-agent-email" class="field-error" />-->
                             </div>
+                            <span class="field-error" ng-show="submitted && regForm.email.$error.required" style="">{{validationViewModel.email.requiredErrorMessage}}</span>
+                            <span class="field-error" ng-show="!regForm.email.$error.required && regForm.email.$invalid" style="">{{validationViewModel.email.patternErrorMessage}}</span>
                         </div>
 
                         <div class="control-group">
@@ -118,17 +112,16 @@
                             <div class="controls">
                                 <input type="password" id="tfgm-register-password" name="password"
                                        class="input-block-level val-required val-password-regex password-strength"  ng-maxlength="20"
-                                       ng-model="sessionData.agentViewModel.password" required ui-validate=" 'chkPass($value)' "
-                                       ui-validate-watch=" 'password' ">
+                                       ng-model="sessionData.agentViewModel.password" ng-pattern="{{validationViewModel.password.pattern}}" onkeyup="chkPass(this.value);" required>
 
                                 <!--onkeyup="chkPass(this.value);"-->
 
                                 <!--<f:validator validatorId="passwordValidator" />
                                 <f:attribute name="confirmPassword" value="#{confirmPassword}" />-->
                                 </input>
-                                <p ng-show="regForm.password.$error.required && !regForm.password.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
                             </div>
-
+                            <span class="field-error" ng-show="submitted && regForm.password.$error.required" style="">{{validationViewModel.password.requiredErrorMessage}}</span>
+                            <span id="password_patternErrorMessage" class="field-error" ng-show="!regForm.password.$error.required && regForm.password.$invalid" style=""><!-- Set in controller because AngularJS field would encode HTML --></span>
                             <!--<h:message for="tfgm-register-password" class="field-error"/>-->
                         </div>
 
@@ -137,7 +130,6 @@
                                 <div id="complexity">Weak</div>
                                 <div id="scorebar">&#160;</div>
                             </div>
-
                             <p class="explanatory-text">Your password must be 8-20 characters in length and must contain at least one upper case letter, one number and one lower case letter.</p>
                         </div>
 
