@@ -142,12 +142,12 @@
                                 <input type="password" name="confirmPassword" id="tfgm-register-password-confirm"
                                        binding="#{confirmPassword}" class="input-block-level val-required" ng-maxlength="20"
                                        required="true"
-                                       ng-model="confirmPassword" data-password-verify="sessionData.agentViewModel.password">
+                                       ng-model="confirmPassword">
 
                                 <!--<f:validateRegex pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,20}$"/>-->
                                 </input>
-                                <p ng-show="regForm.confirmPassword.$error.passwordVerify && !regForm.confirmPassword.$pristine" class="help-block">Your password entries do not match. Please re-enter and try again.</p>
-                                <p ng-show="regForm.confirmPassword.$error.required && !regForm.confirmPassword.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
+                                <span class="field-error" ng-show="submitted && regForm.confirmPassword.$error.required" style="">{{validationViewModel.passwordReTyped.requiredErrorMessage}}</span>
+                                <span id="passwordReTyped_patternErrorMessage" class="field-error" ng-show="!regForm.confirmPassword.$error.required && (sessionData.agentViewModel.password != confirmPassword)" style=""><!-- Set in controller because AngularJS field would encode HTML --></span>
                             </div>
 
                             <!--<h:message for="tfgm-register-password-confirm" class="field-error"/>-->
@@ -161,11 +161,10 @@
                             <div class="controls">
                                 <input type="text" name = "phone" styleClass="input-block-level val-telephone-regex"
                                        id="tfgm-form-create-agent-phone" ng-maxlength="10"
-                                       ng-model="sessionData.agentViewModel.phoneNumber" ng-pattern="phoneNumberPattern" >
+                                       ng-model="sessionData.agentViewModel.phoneNumber" ng-pattern="{{validationViewModel.telephone.pattern}}" >
                                 </input>
-                                <p ng-show="regForm.phone.$invalid && !regForm.phone.$pristine" class="help-block">Enter a valid phone number</p>
-                                <!--<h:message for="tfgm-form-create-agent-phone" class="field-error" />-->
                             </div>
+                            <span class="field-error" ng-show="!regForm.phone.$error.required && regForm.phone.$invalid" style="">{{validationViewModel.telephone.patternErrorMessage}}</span>
                         </div>
 
 
@@ -184,28 +183,30 @@
                             </div>-->
 
                         <div class="control-group">
-                            <label for="tfgm-form-create-agent-address-1" class="field-title">Address line 1</label>
+                            <label for="tfgm-form-create-agent-address-1" class="field-title">Address line 1<span
+                                    class="field-asterisk">*<span class="ir">Required</span></span></label>
                             <div class="controls">
                                 <input type="text" name="addressLine1" styleClass="input-block-level"
                                        id="tfgm-form-create-agent-address-1" ng-maxlength="71"
                                        required="true"
-                                       ng-model="sessionData.agentViewModel.officeLocation.lineOne">
+                                       ng-model="sessionData.agentViewModel.officeLocation.lineOne" ng-pattern="{{validationViewModel.address.pattern}}">
                                 </input>
-                                <p ng-show="regForm.addressLine1.$error.required && !regForm.addressLine1.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <!--<h:message for="tfgm-form-create-agent-address-1" class="field-error" />-->
                             </div>
+                            <span class="field-error" ng-show="submitted && regForm.addressLine1.$error.required" style="">{{validationViewModel.address.requiredErrorMessageLine1}}</span>
+                            <span class="field-error" ng-show="submitted && !regForm.addressLine1.$error.required && regForm.addressLine1.$invalid" style="">{{validationViewModel.address.patternErrorMessage}}</span>
                         </div>
 
                         <div class="control-group">
-                            <label for="tfgm-form-create-agent-address-2" class="field-title">Address line 2</label>
+                            <label for="tfgm-form-create-agent-address-2" class="field-title">Address line 2<span
+                                    class="field-asterisk">*<span class="ir">Required</span></span></label>
                             <div class="controls">
                                 <input type="text" name="addressLine2" styleClass="input-block-level"
                                        id="tfgm-form-create-agent-address-2" maxlength="71"
                                        required="true"
-                                       ng-model="sessionData.agentViewModel.officeLocation.lineTwo">
+                                       ng-model="sessionData.agentViewModel.officeLocation.lineTwo"  ng-pattern="{{validationViewModel.address.pattern}}">
                                 </input>
-                                <p ng-show="regForm.addressLine2.$error.required && !regForm.addressLine2.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <!--<h:message for="tfgm-form-create-agent-address-2" class="field-error" />-->
+                                <span class="field-error" ng-show="submitted && regForm.addressLine2.$error.required" style="">{{validationViewModel.address.requiredErrorMessageLine2}}</span>
+                                <span class="field-error" ng-show="submitted && !regForm.addressLine2.$error.required && regForm.addressLine2.$invalid" style="">{{validationViewModel.address.patternErrorMessage}}</span>
                             </div>
                         </div>
 
@@ -214,12 +215,10 @@
                             <div class="controls">
                                 <input type="text" name="addressLine3" styleClass="input-block-level"
                                        id="tfgm-form-create-agent-address-3" maxlength="71"
-                                       required="true"
-                                       ng-model="sessionData.agentViewModel.officeLocation.lineThree">
+                                       ng-model="sessionData.agentViewModel.officeLocation.lineThree"  ng-pattern="{{validationViewModel.address.pattern}}">
                                 </input>
-                                <p ng-show="regForm.addressLine3.$error.required && !regForm.addressLine3.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <!--<h:message for="tfgm-form-create-agent-address-3" class="field-error" />-->
                             </div>
+                            <span class="field-error" ng-show="submitted && regForm.addressLine3.$invalid" style="">{{validationViewModel.address.patternErrorMessage}}</span>
                         </div>
 
                         <div class="control-group">
@@ -227,11 +226,9 @@
                             <div class="controls">
                                 <input type="text" name="addressLine4" styleClass="input-block-level"
                                        id="tfgm-form-create-agent-address-4" maxlength="71"
-                                       required="true"
-                                       ng-model="sessionData.agentViewModel.officeLocation.lineFour">
+                                       ng-model="sessionData.agentViewModel.officeLocation.lineFour"  ng-pattern="{{validationViewModel.address.pattern}}">
                                 </input>
-                                <p ng-show="regForm.addressLine4.$error.required && !regForm.addressLine4.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <!--<h:message for="tfgm-form-create-agent-address-4" class="field-error" />-->
+                                <span class="field-error" ng-show="submitted && regForm.addressLine4.$invalid" style="">{{validationViewModel.address.patternErrorMessage}}</span>
                             </div>
                         </div>
 
@@ -240,11 +237,9 @@
                             <div class="controls">
                                 <input type="text" name="addressLine5" styleClass="input-block-level"
                                        id="tfgm-form-create-agent-address-5" maxlength="71"
-                                       required="true"
-                                       ng-model="sessionData.agentViewModel.officeLocation.lineFive">
+                                       ng-model="sessionData.agentViewModel.officeLocation.lineFive"  ng-pattern="{{validationViewModel.address.pattern}}">
                                 </input>
-                                <p ng-show="regForm.addressLine5.$error.required && !regForm.addressLine5.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <!--<h:message for="tfgm-form-create-agent-address-5" class="field-error" />-->
+                                <span class="field-error" ng-show="submitted && regForm.addressLine5.$invalid" style="">{{validationViewModel.address.patternErrorMessage}}</span>
                             </div>
                         </div>
 
@@ -253,26 +248,24 @@
                             <div class="controls">
                                 <input type="text" name="addressLine6" styleClass="input-block-level"
                                        id="tfgm-form-create-agent-address-6" maxlength="71"
-                                       required="true"
-                                       ng-model="sessionData.agentViewModel.officeLocation.lineSix">
+                                       ng-model="sessionData.agentViewModel.officeLocation.lineSix"  ng-pattern="{{validationViewModel.address.pattern}}">
                                 </input>
-                                <p ng-show="regForm.addressLine6.$error.required && !regForm.addressLine6.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <!--<h:message for="tfgm-form-create-agent-address-6" class="field-error" />-->
+                                <span class="field-error" ng-show="submitted && regForm.addressLine6.$invalid" style="">{{validationViewModel.address.patternErrorMessage}}</span>
                             </div>
                         </div>
 
                         <div class="control-group margin0">
-                            <label for="tfgm-form-create-agent-postcode" class="field-title">Postcode</label>
+                            <label for="tfgm-form-create-agent-postcode" class="field-title">Postcode<span
+                                    class="field-asterisk">*<span class="ir">Required</span></span></label>
                             <div class="controls">
-                                <input type="number" name="postcode" styleClass="input-block-level"
-                                       id="tfgm-form-create-agent-postcode" maxlength="71"
+                                <input type="text" name="postcode" styleClass="input-block-level"
+                                       id="tfgm-form-create-agent-postcode" maxlength="10"
                                        required="true"
-                                       ng-model="sessionData.agentViewModel.officeLocation.postCode"  ng-pattern="integerval">
+                                       ng-model="sessionData.agentViewModel.officeLocation.postCode"   ng-pattern="{{validationViewModel.postCode.pattern}}">
                                 </input>
-                                <p ng-show="regForm.postcode.$error.required && !regForm.postcode.$pristine" class="help-block">This is a required field. Please enter a value and try again.</p>
-                                <p ng-show="regForm.postcode.$invalid && !regForm.postcode.$pristine" class="help-block">Postcode should be a number</p>
-                                <!--<h:message for="tfgm-form-create-agent-postcode" class="field-error" />-->
                             </div>
+                            <span class="field-error" ng-show="submitted && regForm.postcode.$error.required" style="">{{validationViewModel.postCode.requiredErrorMessage}}</span>
+                            <span class="field-error" ng-show="submitted && !regForm.postcode.$error.required && regForm.postcode.$invalid" style="">{{validationViewModel.postCode.patternErrorMessage}}</span>
                         </div>
                     </div>
                     <!--close span-->
@@ -280,13 +273,10 @@
                 <!--close row-fluid -->
 
                 <div class="next-step-cancel">
-                    <button  ng-click="gotToPage('/ConfirmAgentDetails_VIEW3')" class="btn" <!--ng-disabled="regForm.$invalid"-->>Create Agent</button>
-                    <!--<h:commandLink action="validateAgentDetails" value="" class="btn">
-                        <span class="pull-left">Create agent</span>
-                        <i class="step-btn-icon"></i>
-                    </h:commandLink>-->
-                    <button class="cancel-link"  ng-click="cancelEdit()">Cancel</button>
-                    <!--<h:commandLink class="cancel-link" value="Cancel" action="cancelEnterAgentDetails" immediate="true" />-->
+                    <button  type="submit" ng-click="submitted=true" class="btn" >Create Agent</button>
+                    <!--ng-disabled="regForm.$invalid"-->
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;<a  ng-click="cancelEdit()">Cancel</a>
                 </div>
                 <!--  close next-step-cancel -->
 
